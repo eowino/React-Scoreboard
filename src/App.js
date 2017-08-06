@@ -8,17 +8,9 @@ export class App extends Component {
   render() {
     return (
       <div className="scoreboard">
-        <Header />
+        <Header title="Scoreboard" />
         <Players />
       </div>
     );
   }
 }
-
-
-
-export const Child = () => {
-  return (
-    <p>Some text</p>
-  )
-};
