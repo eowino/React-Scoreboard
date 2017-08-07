@@ -4,6 +4,7 @@ import "./App.css";
 import Header from "./components/header/header";
 import Player from "./components/player/player";
 import Stats from "./components/stats/stats";
+import AddPlayerForm from "./components/add-player/add-player-form";
 import players from "./services/people";
 
 export class App extends Component {
@@ -14,10 +15,13 @@ export class App extends Component {
     };
 
     this.onScoreChange = this.onScoreChange.bind(this);
+    this.onPlayerAdd = this.onPlayerAdd.bind(this);
+    this.onRemovePlayer = this.onRemovePlayer.bind(this);
   }
 
   onScoreChange(index, delta) {
-    this.state.players[index].score += delta;
+    let players = this.state.players;
+    players[index].score += delta;
     this.setState(() => {
       return {
         players: players
@@ -25,11 +29,41 @@ export class App extends Component {
     });
   }
 
+  onPlayerAdd(name) {
+    let id = this.generatePlayerID() + 1;
+    let players = this.state.players;
+    players.push({
+      name: name,
+      id: id,
+      score: 0
+    });
+    this.setState(() => {
+      return {
+        players: players
+      };
+    });
+  }
+
+  onRemovePlayer(index) {
+    let players = this.state.players;
+    players.splice(index, 1);
+    this.setState(() => {
+      return {
+        players: players
+      };
+    });
+  }
+
+  generatePlayerID() {
+    let players = this.state.players;
+    return players.sort((a, b) => a.id < b.id)[0]['id']; 
+  }
+
   render() {
     let playerCount = this.state.players.length;
 
     let score = this.state.players.reduce(
-      (total, player) => total + player["score"],
+      (total, player) => total + player.score,
       0
     );
 
@@ -46,10 +80,12 @@ export class App extends Component {
                 person={player}
                 key={player.id}
                 onScoreChange={delta => this.onScoreChange(index, delta)}
+                onRemove={() => this.onRemovePlayer(index)}
               />
             );
           })}
         </div>
+        <AddPlayerForm onAdd={this.onPlayerAdd} />
       </div>
     );
   }
