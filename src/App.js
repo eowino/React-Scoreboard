@@ -56,6 +56,7 @@ export class App extends Component {
 
   generatePlayerID() {
     let players = this.state.players;
+    if(players.length < 1) return 0;
     return players.sort((a, b) => a.id < b.id)[0]['id']; 
   }
 
