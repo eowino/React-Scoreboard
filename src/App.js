@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Header from "./components/header/header";
 import Player from "./components/player/player";
-import Stats from "./components/stats/stats";
+
 import AddPlayerForm from "./components/add-player/add-player-form";
 import players from "./services/people";
 
@@ -69,10 +69,7 @@ export class App extends Component {
 
     return (
       <div className="scoreboard">
-        <Header title="Scoreboard">
-          <Stats players={playerCount} totalPoints={score} />
-        </Header>
-
+        <Header title="Scoreboard" playerCount={playerCount} score={score} />
         <div className="players">
           {this.state.players.map((player, index) => {
             return (
