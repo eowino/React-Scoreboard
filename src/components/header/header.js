@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 const Header = (props) => {
     return (
         <div className="header">
+            {props.children}
             <h1>{props.title}</h1>
         </div>
     );
